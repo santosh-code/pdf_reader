@@ -28,14 +28,7 @@ Superscript_column=dfobj_1['text'].str.extract(r'(\s.+[a-z][0-9].+\.\.|\s.+[a-z]
 Ref_Superscript=Superscript_column.str.extract(r'(\d\,\s\d|\d\d|\d)', expand=False)
 
 
-
-
-
-#Superscript_column1=dfobj_1['text'].str.extract(r'(\s.+[a-z][0-9].+\.\.|\s\d\.\.)', expand=False)
-#Ref_Superscript1=Superscript_column.str.extract(r'([0-9])', expand=False)
-
-
-
+#creating dataframe 
 cols=[1,2]
 second_column.drop(cols, axis=1,inplace=True)
 third_column1.drop(cols, axis=1,inplace=True)
@@ -51,22 +44,14 @@ Ref_SuperScript_df.rename(columns={'text':'ref_Superscript'},inplace=True)
 
 Page_No=pd.DataFrame(dfobj_1.Page_No)
 PDF_Data_Frame= pd.concat([first_column, second_column,third_column1,Ref_SuperScript_df,Page_No], join = 'outer', axis = 1)
-#PDF_Data_Frame.loc[PDF_Data_Frame['BHCK'].isnull(),'Reference'] = np.NaN
 
-#footter_column=var.str.extract(r'(\s.+[a-z][0-9])', expand=False)
-
-
-##########    for MERGING FOOTER COLUMN   ########################
+#for MERGING FOOTER COLUMN   ########################
 PDF_Data_Frame=PDF_Data_Frame.dropna(subset=['TEXT'])
 PDF_Data_Frame=PDF_Data_Frame.reset_index(drop=True)
 
 
 
-#for i in range(1,len(PDF_Data_Frame.index)):
-#    match_pattern=re.search(r'^\d+\.\s|^[a-z]+\.\s|^\(\d+\)\s|^\([a-z]+\)\s|^\/\d{4}$|^TEXT',PDF_Data_Frame['TEXT'][i])
-#    if match_pattern is None:
-#        PDF_Data_Frame['TEXT'][i]=PDF_Data_Frame['TEXT'][i-1]+PDF_Data_Frame['TEXT'][i]
-#        PDF_Data_Frame['TEXT'][i-1]=None
+
 PDF_Data_Frame.loc[PDF_Data_Frame['BHCK'].isnull(),'BHCK'] = ''
     #Original      
 for i in range(PDF_Data_Frame.shape[0]):
@@ -77,7 +62,7 @@ for i in range(PDF_Data_Frame.shape[0]):
         PDF_Data_Frame['BHCK'][i]=PDF_Data_Frame['BHCK'][i-1]+PDF_Data_Frame['BHCK'][i]
         PDF_Data_Frame['BHCK'][i-1]=None
         
-############################    BHCK-MERGING AND REFERENCE-ALIGNMENT      ##########################################
+# BHCK-MERGING AND REFERENCE-ALIGNMENT ##########################################
 PDF_Data_Frame.loc[PDF_Data_Frame['Reference'].isnull(),'Reference'] = ''
 
 PDF_Data_Frame=PDF_Data_Frame.dropna(subset=['TEXT'])
@@ -97,7 +82,7 @@ import os
 os.getcwd()
         
         
-##########    23_nov_copying BHCK FROM TEXT TO BHCK COLUMN      ##############################
+#23_nov_copying BHCK FROM TEXT TO BHCK COLUMN##############################
 PDF_Data_Frame=PDF_Data_Frame.dropna(subset=['TEXT'])
 PDF_Data_Frame=PDF_Data_Frame.reset_index(drop=True)
 
@@ -113,7 +98,7 @@ for i in range(PDF_Data_Frame.shape[0]):
             PDF_Data_Frame['BHCK'] += PDF_Data_Frame['TEXT'][i][j.end():]
         
 
-################         removing BHCK from text column           ###############
+#removing BHCK from text column ###############
 
 PDF_Data_Frame=PDF_Data_Frame.dropna(subset=['TEXT'])
 PDF_Data_Frame=PDF_Data_Frame.reset_index(drop=True)
