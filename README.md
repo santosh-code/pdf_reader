@@ -33,8 +33,8 @@ Ref_Superscript=Superscript_column.str.extract(r'(\d\,\s\d|\d\d|\d)', expand=Fal
 
 
 
-#Superscript_column1=dfobj_1['text'].str.extract(r'(\s.+[a-z][0-9].+\.\.|\s\d\.\.)', expand=False)
-#Ref_Superscript1=Superscript_column.str.extract(r'([0-9])', expand=False)
+Superscript_column1=dfobj_1['text'].str.extract(r'(\s.+[a-z][0-9].+\.\.|\s\d\.\.)', expand=False)
+Ref_Superscript1=Superscript_column.str.extract(r'([0-9])', expand=False)
 
 
 
@@ -55,7 +55,7 @@ Page_No=pd.DataFrame(dfobj_1.Page_No)
 PDF_Data_Frame= pd.concat([first_column, second_column,third_column1,Ref_SuperScript_df,Page_No], join = 'outer', axis = 1)
 #PDF_Data_Frame.loc[PDF_Data_Frame['BHCK'].isnull(),'Reference'] = np.NaN
 
-#footter_column=var.str.extract(r'(\s.+[a-z][0-9])', expand=False)
+
 
 
 ##########    for MERGING FOOTER COLUMN   ########################
